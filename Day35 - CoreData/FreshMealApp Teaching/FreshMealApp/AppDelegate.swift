@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSAttributedStringKey.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
             NSAttributedStringKey.shadow: shadow
         ]
+        let urls = FileManager.default.urls(for: .documentDirectory,in: .userDomainMask)
+        print(urls[urls.count-1] as URL)
         
         return true
     }

@@ -59,11 +59,13 @@ class AddEditMealTableViewController: UITableViewController,UIImagePickerControl
     
     @IBAction func backAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        print(#function)
     }
     @IBAction func browserImage(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
+         print(#function)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
@@ -71,10 +73,11 @@ class AddEditMealTableViewController: UITableViewController,UIImagePickerControl
             thumbnailImageView.image = pickedImage
         }
          dismiss(animated: true, completion: nil)
-        
+         print(#function)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+         print(#function)
     }
    
 }
