@@ -19,9 +19,13 @@ class HomeTableViewController: UITableViewController {
         // Display LargeTitles
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
-            navigationItem.largeTitleDisplayMode = .always
+            navigationItem.largeTitleDisplayMode = .automatic
         }
+       
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
     }
 
     override func didReceiveMemoryWarning() {

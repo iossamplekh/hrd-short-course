@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddEditMealTableViewController: UITableViewController {
+class AddEditMealTableViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     //Test Commit
     @IBOutlet weak var titleTextField: UITextField!
@@ -18,16 +18,24 @@ class AddEditMealTableViewController: UITableViewController {
     
     @IBOutlet weak var addEditMealNavigationBar: UINavigationItem!
     
+     let imagePicker = UIImagePickerController()
+    var service = MealService ()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewCornerRadius(view: longDescriptionTextView)
         setupViewCornerRadius(view: thumbnailImageView)
+        setUpNavigationBar()
         
+        imagePicker.delegate = self
+      
+    }
+    func setUpNavigationBar(){
         if #available(iOS 11.0, *) {
             addEditMealNavigationBar.largeTitleDisplayMode = .never
         }
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
     }
-    
     func setupViewCornerRadius(view: UIView) {
         
         let layer = view.layer
@@ -41,12 +49,34 @@ class AddEditMealTableViewController: UITableViewController {
     }
     
     @IBAction func saveAction(_ sender: Any) {
+        let imageData = UIImageJPEGRepresentation(thumbnailImageView.image!, 1.0)
+        service.create(title: titleTextField.text!, shortDesription: shortDescriptionTextField.text!, logDescription: longDescriptionTextView.text!, thumImage: imageData!)
+        service.saveChange()
+        print(#function)
+        
     }
     
     
     @IBAction func backAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
+    @IBAction func browserImage(_ sender: Any) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            thumbnailImageView.contentMode = .scaleAspectFit
+            thumbnailImageView.image = pickedImage
+        }
+         dismiss(animated: true, completion: nil)
+        
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+   
 }
 
 
