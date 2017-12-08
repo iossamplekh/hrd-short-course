@@ -32,7 +32,7 @@ class AddEditMealTableViewController: UITableViewController,UIImagePickerControl
         if mealHolder != nil {
             titleTextField.text = mealHolder?.title
             shortDescriptionTextField.text = mealHolder?.short_description
-            longDescriptionTextView.text = mealHolder?.description
+            longDescriptionTextView.text = mealHolder?.long_description
             thumbnailImageView.image = UIImage(data: (mealHolder?.image)!)
         }
       
