@@ -20,6 +20,7 @@ class AddEditMealTableViewController: UITableViewController,UIImagePickerControl
     
      let imagePicker = UIImagePickerController()
     var service = MealService ()
+    var mealHolder: Meal?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,12 @@ class AddEditMealTableViewController: UITableViewController,UIImagePickerControl
         setUpNavigationBar()
         
         imagePicker.delegate = self
+        if mealHolder != nil {
+            titleTextField.text = mealHolder?.title
+            shortDescriptionTextField.text = mealHolder?.short_description
+            longDescriptionTextView.text = mealHolder?.description
+            thumbnailImageView.image = UIImage(data: (mealHolder?.image)!)
+        }
       
     }
     func setUpNavigationBar(){

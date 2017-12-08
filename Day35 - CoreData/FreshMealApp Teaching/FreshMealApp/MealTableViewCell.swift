@@ -19,5 +19,24 @@ class MealTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        //Border radius
+        containerView.layer.cornerRadius = 5
+        containerView.layer.masksToBounds = true
+        
+        //border
+        containerView.layer.borderColor = UIColor.lightGray.cgColor
+        containerView.layer.borderWidth = 1
+    }
+    
+    func configurCell(with meal: Meal){
+        titleLabel.text = meal.title
+        shortDescriptionLabel.text = meal.short_description
+        thumbnailImageView.image = UIImage(data: meal.image!)
+        
+        if let image = thumbnailImageView.image{
+            let aspect = image.size.height / image.size.width
+            thumbnailImageHeightConstrant.constant = containerView.frame.size.width*aspect
+        }
     }
 }

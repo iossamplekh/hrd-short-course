@@ -6,6 +6,7 @@
 //  Copyright © 2017 Kokpheng. All rights reserved.
 //
 
+//step 1 is import UIKit and CoreData
 import UIKit
 import CoreData
 

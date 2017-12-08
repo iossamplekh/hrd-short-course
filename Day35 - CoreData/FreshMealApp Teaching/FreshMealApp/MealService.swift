@@ -6,24 +6,27 @@
 //  Copyright © 2017 Kokpheng. All rights reserved.
 //
 
+//step 1 import UIKit and CoreData
 import UIKit
 import CoreData
 
 extension Meal {
-    
+    // step 2
     //Entity Name
     static let entityName = "Meal"
 }
 
 
 class MealService{
-    //s 3
+    //s 3 create connect view
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
     func create(title:String,shortDesription:String,logDescription:String,thumImage: Data)->Meal{
+        //s 4: connent Model
         let newMeal = NSEntityDescription.insertNewObject(forEntityName: Meal.entityName, into: context) as! Meal
         
+        // s 5
         newMeal.title = title
         newMeal.short_description = shortDesription
         newMeal.long_description = logDescription
