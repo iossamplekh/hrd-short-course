@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B8A3C801FDD7EAA00A7C2B4 /* MealDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8A3C7F1FDD7EAA00A7C2B4 /* MealDetailViewController.swift */; };
 		6F4893EB1FD7A13A00350C52 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4893EA1FD7A13A00350C52 /* AppDelegate.swift */; };
 		6F4893F31FD7A13A00350C52 /* FreshMealApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F4893F11FD7A13A00350C52 /* FreshMealApp.xcdatamodeld */; };
 		6F4894071FD7A16900350C52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F4894021FD7A16900350C52 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B8A3C7F1FDD7EAA00A7C2B4 /* MealDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewController.swift; sourceTree = "<group>"; };
 		6F4893E71FD7A13A00350C52 /* FreshMealApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreshMealApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F4893EA1FD7A13A00350C52 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F4893F21FD7A13A00350C52 /* FreshMealApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FreshMealApp.xcdatamodel; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				6F4893F91FD7A13A00350C52 /* Info.plist */,
 				6F4893F11FD7A13A00350C52 /* FreshMealApp.xcdatamodeld */,
 				ECFEDDC21FD95C550096AE2A /* MealService.swift */,
+				0B8A3C7F1FDD7EAA00A7C2B4 /* MealDetailViewController.swift */,
 			);
 			path = FreshMealApp;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				ECFEDDC31FD95C550096AE2A /* MealService.swift in Sources */,
 				6F48940B1FD7A17A00350C52 /* MealTableViewCell.swift in Sources */,
 				6F4893EB1FD7A13A00350C52 /* AppDelegate.swift in Sources */,
+				0B8A3C801FDD7EAA00A7C2B4 /* MealDetailViewController.swift in Sources */,
 				EC425F4D1FD81D420068FF1A /* HomeTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

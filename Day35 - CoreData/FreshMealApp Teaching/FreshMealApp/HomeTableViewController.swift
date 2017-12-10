@@ -12,13 +12,13 @@ class HomeTableViewController: UITableViewController {
 
     var data: [Meal] = []
     var mealService = MealService()
+    var displayedData : [Meal] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Navigation bar
         title = "Fresh Meal"
-        
         // Display LargeTitles
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -41,22 +41,9 @@ class HomeTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
         data = mealService.getAll()
+        displayedData = data
         tableView.reloadData()
         print("\(data)")
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-
-        return data.count
-    }
-
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MealTableViewCell", for: indexPath) as! MealTableViewCell
-        cell.configurCell(with: data[indexPath.row])
-
-        return cell
     }
  
     func setupTableView(){
@@ -68,15 +55,55 @@ class HomeTableViewController: UITableViewController {
         let nib = UINib(nibName: "MealTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MealTableViewCell")
     }
+    
+   
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEdit" {
+            print("==========ShowEdit =========")
+            let dest = segue.destination as! AddEditMealTableViewController
+            dest.mealHolder = sender as? Meal
+        }
+        if segue.identifier == "MealDetailViewController" {
+            // Get MealDetailViewController object from Segue Destination
+            let dest = segue.destination as! MealDetailViewController
+            dest.mealHolder = sender as! Meal  // Pass Data
+            
+        }
+
+        else{
+            print("==========Unknown =======")
+        }
+
+    }
+   
+
+}
+
+extension HomeTableViewController{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        
+        return data.count
+    }
     
-    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MealTableViewCell", for: indexPath) as! MealTableViewCell
+        cell.configurCell(with: data[indexPath.row])
+        
+        return cell
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Get Data from each selected row
+        let meal = displayedData[indexPath.row]
+        // Call Segue with ID
+        performSegue(withIdentifier: "MealDetailViewController", sender: meal)
+    }
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(style: .normal, title: "Delete") { (action, indexPath) in
             
@@ -92,7 +119,7 @@ class HomeTableViewController: UITableViewController {
         
         let editButton = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
             let editMeal = self.data[indexPath.row]
-        
+            
             self.performSegue(withIdentifier: "showEdit", sender: editMeal)
             
         }
@@ -102,46 +129,4 @@ class HomeTableViewController: UITableViewController {
         
         return [deleteButton,editButton]
     }
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEdit" {
-            print("==========ShowEdit =========")
-            let dest = segue.destination as! AddEditMealTableViewController
-            dest.mealHolder = sender as? Meal
-        }else{
-            print("==========Unknown =======")
-        }
-
-}
 }
