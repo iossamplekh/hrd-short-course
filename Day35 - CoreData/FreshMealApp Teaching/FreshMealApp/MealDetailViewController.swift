@@ -21,7 +21,6 @@ class MealDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = mealHolder.title
         
         setUpNavigationBar()
         setupContainerView()
@@ -30,7 +29,7 @@ class MealDetailViewController: UIViewController {
     }
     func setUpNavigationBar(){
         if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
+            navigationItem.largeTitleDisplayMode = .automatic
         }
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
     }
@@ -39,25 +38,28 @@ class MealDetailViewController: UIViewController {
     }
     
     func setupContainerView() {
-        // border radius
         containerView.layer.cornerRadius = 5
         containerView.layer.masksToBounds = true
         
-        // border
         containerView.layer.borderColor = UIColor.lightGray.cgColor
-        containerView.layer.borderWidth = 0.5
+        containerView.layer.borderWidth = 1
     }
     
     func prepareData() {
-        mealTitleLable.text = mealHolder.title
-        mealShortDescLabel.text = mealHolder.short_description
-        mealLongDescLabel.text = mealHolder.long_description
-        mealImageView.image = UIImage(data: mealHolder.image!)
-        if let image = mealImageView.image {
-            // Calculate aspect
-            let aspect = image.size.height / image.size.width
-            thumbnailImageHeightConstraint.constant = view.frame.size.width * aspect
+        if let meal = self.mealHolder{
+            title = meal.title
+            
+            mealTitleLable.text = meal.title
+            mealShortDescLabel.text = meal.short_description
+            mealLongDescLabel.text = meal.long_description
+            mealImageView.image = UIImage(data: meal.image!)
+            
+            if let image = mealImageView.image {
+                let aspect = image.size.height / image.size.width
+                thumbnailImageHeightConstraint.constant = view.frame.size.width * aspect
+            }
         }
+        
     }
 
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {

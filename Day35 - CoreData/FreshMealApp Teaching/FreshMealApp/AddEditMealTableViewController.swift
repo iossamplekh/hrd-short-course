@@ -57,8 +57,19 @@ class AddEditMealTableViewController: UITableViewController,UIImagePickerControl
     
     @IBAction func saveAction(_ sender: Any) {
         let imageData = UIImageJPEGRepresentation(thumbnailImageView.image!, 1.0)
-        service.create(title: titleTextField.text!, shortDesription: shortDescriptionTextField.text!, logDescription: longDescriptionTextView.text!, thumImage: imageData!)
-        service.saveChange()
+        //Edit Screen
+        if self.mealHolder != nil{
+            mealHolder?.title =  titleTextField.text
+            mealHolder?.short_description = shortDescriptionTextField.text
+            mealHolder?.long_description =  longDescriptionTextView.text
+            mealHolder?.image = imageData
+            service.update(updateMeal: mealHolder!)
+        } else{
+           _ =  service.create(title: titleTextField.text!, shortDesription: shortDescriptionTextField.text!, logDescription: longDescriptionTextView.text!, thumImage: imageData!)
+            service.saveChange()
+        }
+        
+        
         print(#function)
         
     }

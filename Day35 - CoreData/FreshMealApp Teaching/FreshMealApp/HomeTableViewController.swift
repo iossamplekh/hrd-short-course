@@ -73,18 +73,21 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
     }
 //
     func setupSearchController() {
+        //Set Search
         resultSearchController.searchBar.placeholder = "Search here"
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = true
-        } else {
-            // Fallback on earlier versions
-        }
+        
         resultSearchController.hidesNavigationBarDuringPresentation = true
+        //dim
         resultSearchController.dimsBackgroundDuringPresentation = false
+        //barstyle
         resultSearchController.searchBar.searchBarStyle = UISearchBarStyle.default
+        //color font
         resultSearchController.searchBar.tintColor = .white
+        //color insize of font when typing
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        //Set Size to label of search bar
         resultSearchController.searchBar.sizeToFit()
+        //Confirm Protocal of search
         resultSearchController.searchResultsUpdater = self
         
         if #available(iOS 11.0, *) {
@@ -92,25 +95,22 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
         } else {
             tableView.tableHeaderView = resultSearchController.searchBar
         }
+         navigationItem.hidesSearchBarWhenScrolling = true
+
+        print(#function)
     }
 
 //
     func updateSearchResults(for searchController: UISearchController) {
-        // Check if the user cancelled or deleted the search term so we can display the full list instead.
-        
         if (searchController.searchBar.text?.count)! > 0 {
-            // 1 Remove all data
+            // remove if has data
             filteredData.removeAll(keepingCapacity: false)
-            // 2 Create Predication
             let searchPredicate = NSPredicate(format: "SELF.title CONTAINS[c] %@", searchController.searchBar.text!)
             
-            // 3 Create an instance of the service.
-            let mealService = MealService()
-            
-            // 4 filter data by predication
+            //let mealService = MealService()
+            // it
             filteredData = mealService.get(withPredicate: searchPredicate)
             
-            // 5 display data
             self.displayedData = self.filteredData
         }else{
             self.displayedData = self.data
@@ -129,7 +129,13 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
         if segue.identifier == "MealDetailViewController" {
             // Get MealDetailViewController object from Segue Destination
             let dest = segue.destination as! MealDetailViewController
+            //First Way
             dest.mealHolder = sender as! Meal  // Pass Data
+            
+            //Secend Way
+            //let indexPath = tableView.indexPathForSelectedRow
+            //let meal = displayedData[(indexPath?.row)!]
+            //dest.mealHolder = meal
         }
         else{
             print("==========Unknown =======")
@@ -144,20 +150,26 @@ extension HomeTableViewController{
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        return data.count
+        return displayedData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MealTableViewCell", for: indexPath) as! MealTableViewCell
-        cell.configurCell(with: data[indexPath.row])
+        cell.configurCell(with: displayedData[indexPath.row])
         
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Get Data from each selected row
         let meal = displayedData[indexPath.row]
+        //set value when click on picture
+        resultSearchController.isActive = false
         // Call Segue with ID
+        //First Way
         performSegue(withIdentifier: "MealDetailViewController", sender: meal)
+        
+        //Second Way
+        //performSegue(withIdentifier: "MealDetailViewController", sender: nil)
     }
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -167,18 +179,18 @@ extension HomeTableViewController{
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(style: .normal, title: "Delete") { (action, indexPath) in
             
-            let deleteMeal = self.mealService.getBy(id: self.data[indexPath.row].objectID)
-            print("=========",self.data[indexPath.row].objectID)
+            let deleteMeal = self.mealService.getBy(id: self.displayedData[indexPath.row].objectID)
+            print("=========",self.displayedData[indexPath.row].objectID)
             
             //Delete
-            self.mealService.delete(id: self.data[indexPath.row].objectID)
-            self.data.remove(at: indexPath.row)
+            self.mealService.delete(id: self.displayedData[indexPath.row].objectID)
+            self.displayedData.remove(at: indexPath.row)
             self.mealService.saveChange()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
         
         let editButton = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
-            let editMeal = self.data[indexPath.row]
+            let editMeal = self.displayedData[indexPath.row]
             
             self.performSegue(withIdentifier: "showEdit", sender: editMeal)
             
