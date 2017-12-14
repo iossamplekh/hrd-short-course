@@ -29,9 +29,9 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
         "https://d3hvwccx09j84u.cloudfront.net/640,0/image/59f25f08a2882a23b21b5112-2eea7a90.jpg",
         "https://d3hvwccx09j84u.cloudfront.net/640,0/image/5a04abf5a2882a5e7f3e0fe2-0af52f06.jpg",
         "https://d3hvwccx09j84u.cloudfront.net/640,0/image/sizzling-balsamic-steak-04907d3a.jpg"]
-
     
-
+    
+    
     var data: [Meal] = []
     var mealService = MealService()
     var displayedData : [Meal] = []
@@ -39,7 +39,7 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Navigation bar
         title = "Fresh Meal"
         // Display LargeTitles
@@ -48,20 +48,24 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
             navigationItem.largeTitleDisplayMode = .automatic
         }
         setupTableView()
-       
+        
         setupSearchController()
-
+        
     }
-
-
+    
+    
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
-        data = mealService.getAll()
-        displayedData = data
-        tableView.reloadData()
-        print("\(data)")
+        //navigationController?.navigationBar.barTintColor =  colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        UIApplication.shared.statusBarStyle = .lightContent
+        // Get data
+        if (resultSearchController.searchBar.text?.count)! == 0 {
+            data = mealService.getAll()
+            displayedData = data
+            tableView.reloadData()
+        }
     }
- 
+    
     func setupTableView(){
         // dynamic row
         tableView.estimatedRowHeight = 120
@@ -71,7 +75,7 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
         let nib = UINib(nibName: "MealTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MealTableViewCell")
     }
-//
+    //
     func setupSearchController() {
         //Set Search
         resultSearchController.searchBar.placeholder = "Search here"
@@ -95,12 +99,12 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
         } else {
             tableView.tableHeaderView = resultSearchController.searchBar
         }
-         navigationItem.hidesSearchBarWhenScrolling = true
-
+        navigationItem.hidesSearchBarWhenScrolling = true
+        
         print(#function)
     }
-
-//
+    
+    //
     func updateSearchResults(for searchController: UISearchController) {
         if (searchController.searchBar.text?.count)! > 0 {
             // remove if has data
@@ -116,15 +120,16 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
             self.displayedData = self.data
         }
         tableView.reloadData()
-
+        
     }
-//
-
+    //
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showEdit" {
             print("==========ShowEdit =========")
             let dest = segue.destination as! AddEditMealTableViewController
             dest.mealHolder = sender as? Meal
+            navigationController?.dismiss(animated: true, completion: nil)
         }
         if segue.identifier == "MealDetailViewController" {
             // Get MealDetailViewController object from Segue Destination
@@ -136,14 +141,15 @@ class HomeTableViewController: UITableViewController ,UISearchResultsUpdating{
             //let indexPath = tableView.indexPathForSelectedRow
             //let meal = displayedData[(indexPath?.row)!]
             //dest.mealHolder = meal
+            navigationController?.dismiss(animated: true, completion: nil)
         }
         else{
             print("==========Unknown =======")
         }
-
+        
     }
-   
-
+    
+    
 }
 
 extension HomeTableViewController{
@@ -202,3 +208,4 @@ extension HomeTableViewController{
         return [deleteButton,editButton]
     }
 }
+

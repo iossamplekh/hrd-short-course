@@ -25,13 +25,14 @@ class MealDetailViewController: UIViewController {
         setUpNavigationBar()
         setupContainerView()
         prepareData()
-
+        
     }
     func setUpNavigationBar(){
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .automatic
         }
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
+        //navigationController?.navigationBar.barTintColor =  colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
     }
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .default
@@ -61,7 +62,7 @@ class MealDetailViewController: UIViewController {
         }
         
     }
-
+    
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         if let image = mealImageView.image {
             // Calculate aspect
@@ -70,7 +71,7 @@ class MealDetailViewController: UIViewController {
             thumbnailImageHeightConstraint.constant = view.frame.size.width * aspect
         }
     }
-
+    
     @IBOutlet var Back: UIButton!
     
     @IBAction func Back(_ sender: Any) {
@@ -78,3 +79,4 @@ class MealDetailViewController: UIViewController {
     }
     
 }
+

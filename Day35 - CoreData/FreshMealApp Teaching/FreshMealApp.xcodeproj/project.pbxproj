@@ -54,7 +54,6 @@
 		6F4893DE1FD7A13A00350C52 = {
 			isa = PBXGroup;
 			children = (
-				EC8EC7381FE00617003E6EDC /* noted.swift */,
 				6F4893E91FD7A13A00350C52 /* FreshMealApp */,
 				6F4893E81FD7A13A00350C52 /* Products */,
 			);
@@ -71,6 +70,7 @@
 		6F4893E91FD7A13A00350C52 /* FreshMealApp */ = {
 			isa = PBXGroup;
 			children = (
+				EC8EC7381FE00617003E6EDC /* noted.swift */,
 				6F696C041FD7D80A00A1E338 /* SampleData.rtf */,
 				6F4893EA1FD7A13A00350C52 /* AppDelegate.swift */,
 				EC425F4C1FD81D420068FF1A /* HomeTableViewController.swift */,
